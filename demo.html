@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spinning Cat Loader — Demo</title>
+
+  <!-- 1. The cat CSS -->
+  <link rel="stylesheet" href="spinning-cat-loader.css">
+
+  <style>
+    /* ---- Page content demo styles (not part of the loader) ---- */
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+      --loader-bg: #f7f7f7;
+    }
+
+    #container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 0 0 0.5rem;
+      color: #333;
+    }
+
+    p {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    button {
+      display: inline-block;
+      padding: 0.625rem 1.5rem;
+      margin: 0.375rem;
+      border: none;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-show {
+      background: #ff6b6b;
+      color: #fff;
+    }
+    .btn-show:hover { background: #ee5a5a; }
+    .btn-hide {
+      background: #51cf66;
+      color: #fff;
+    }
+    .btn-hide:hover { background: #40c057; }
+
+    code {
+      background: #f0f0f0;
+      padding: 0.125em 0.375em;
+      border-radius: 0.25em;
+      font-size: 0.9em;
+    }
+
+    .loader-cat-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #f7f7f7;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    /* reset the #loading to be positioned within this box */
+    .loader-cat-wrapper #loading {
+      position: absolute;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== The Loading Cat HTML ====== -->
+  <!-- Copy this block into any page. The #loading wrapper is the overlay;
+       the .cat div is the actual spinning cat illustration. -->
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Page Content ====== -->
+  <div id="container">
+    <div class="inner">
+      <h1>🐱 Spinning Cat Loader</h1>
+      <p>
+        This is a pure-CSS animated cat that spins while your page loads.
+        It was extracted from <a href="https://github.com/amehime/hexo-theme-shoka">hexo-theme-shoka</a>.
+        <strong>No images required —</strong> the entire cat is drawn with CSS gradients, clip-paths, and borders.
+      </p>
+
+      <div class="card">
+        <h3>Manual Controls</h3>
+        <p>Press these buttons to test the loader API:</p>
+        <button class="btn-show" onclick="CatLoader.show()">Show Loader</button>
+        <button class="btn-hide" onclick="CatLoader.hide(0)">Hide Immediately</button>
+        <button class="btn-hide" onclick="CatLoader.hide()">Hide (3s delay)</button>
+        <p style="margin-top:1em;font-size:0.875em;color:#888;">
+          You can also <strong>click on the cat</strong> to dismiss it.
+          Hover over it to pause the animation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Features</h3>
+        <ul style="line-height:2;">
+          <li>🐱 Pure CSS orange tabby cat — zero images</li>
+          <li>🔄 Spins 720° while the body "morphs" via clip-path</li>
+          <li>🖱️ Hover to pause, click to dismiss</li>
+          <li>👁️ Re-shows when user switches to another tab (optional)</li>
+          <li>📦 ~300 lines of CSS, ~100 lines of JS</li>
+          <li>🎬 Optional smooth fade with <a href="https://animejs.com/">anime.js</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>How to Integrate</h3>
+        <ol style="line-height:2;">
+          <li>Copy <code>&lt;div id="loading"&gt;...&lt;/div&gt;</code> right after <code>&lt;body&gt;</code></li>
+          <li>Include <code>spinning-cat-loader.css</code></li>
+          <li>Include <code>spinning-cat-loader.js</code> (and optionally anime.js)</li>
+          <li>Configure via <code>CatLoaderConfig</code> (see README)</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional: anime.js for smooth fade transitions -->
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+
+  <!-- 2. The loader JS -->
+  <script src="spinning-cat-loader.js"></script>
+
+  <!-- 3. Optional: global config (define BEFORE loading the JS) -->
+  <script>
+    // This config is read by spinning-cat-loader.js on init.
+    // Define it BEFORE including the loader script,
+    // or set as window.CatLoaderConfig before the DOMContentLoaded event.
+    window.CatLoaderConfig = {
+      start: true,   // Show on first page load
+      switch: true   // Show when switching browser tabs
+    };
+  </script>
+
+</body>
+</html>

@@ -140,7 +140,7 @@ All modern browsers (Chrome, Firefox, Safari, Edge).
 |---|---|
 | `spinning-cat-loader.css` | All cat styles + keyframes (drop-in, ~220 lines) |
 | `spinning-cat-loader.js` | Show/hide logic + tab-switch behavior (~130 lines) |
-| `demo.html` | Standalone demo — open in browser to see it work |
+| `index.html` | Standalone demo — open in browser to see it work |
 | `README.md` | This file |
 
 ---
